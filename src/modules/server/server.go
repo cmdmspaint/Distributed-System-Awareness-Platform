@@ -78,4 +78,7 @@ func main() {
 
 	models.InitMySQL(sConfig.MysqlS)
 	level.Info(logger).Log("msg", "load.mysql.success", "db.num", len(models.DB))
+	// TODO 本地测试node的添加，后续需要删掉
+	//models.StreePathAddTest(logger)
+	models.StreePathQueryTest2(logger)
 }
