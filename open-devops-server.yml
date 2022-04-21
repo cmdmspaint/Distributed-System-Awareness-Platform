@@ -1,6 +1,6 @@
 mysql_s:
   - name: stree
-    addr: "xxx:xxx@tcp(x.x.x.x:3306)/awareness?charset=utf8&parseTime=True&loc=Asia%2FShanghai"
+    addr: "root:123456@tcp(49.233.189.200:3306)/awareness?charset=utf8&parseTime=True&loc=Asia%2FShanghai"
     max: 128
     idel: 16
     debug: false

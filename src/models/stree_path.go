@@ -179,6 +179,9 @@ func StreePathQuery(req *common.NodeCommonReq, logger log.Logger) (res []string)
 			查p时需要带上p.name查询
 		*/
 		gps := strings.Split(req.Node, ".")
+		if len(gps) != 2 {
+			return
+		}
 		g, p := gps[0], gps[1]
 		nodeG := &StreePath{
 			Level:    1,

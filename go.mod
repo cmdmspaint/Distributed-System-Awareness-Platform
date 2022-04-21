@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/go-kit/log v0.2.0
 	github.com/go-sql-driver/mysql v1.6.0
+	github.com/oklog/run v1.0.0
 	github.com/prometheus/common v0.33.0
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	gopkg.in/yaml.v2 v2.4.0
