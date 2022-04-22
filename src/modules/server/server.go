@@ -3,6 +3,7 @@ package main
 import (
 	"Distributed-System-Awareness-Platform/src/models"
 	"Distributed-System-Awareness-Platform/src/modules/server/config"
+	"Distributed-System-Awareness-Platform/src/modules/server/rpc"
 	"context"
 	"fmt"
 	"github.com/go-kit/log"
@@ -115,22 +116,23 @@ func main() {
 		)
 	}
 	{
-
+		// rpc server
 		g.Add(func() error {
-			for {
-				ticker := time.NewTicker(5 * time.Second)
-				select {
-				case <-ctxAll.Done():
-					level.Warn(logger).Log("msg", "我是模块01退出了，接收到了cancelall")
-					return nil
-				case <-ticker.C:
-					level.Warn(logger).Log("msg", "我是模块01")
-				}
-
+			errChan := make(chan error, 1)
+			go func() {
+				errChan <- rpc.Start(":8080", logger)
+			}()
+			select {
+			case err := <-errChan:
+				level.Error(logger).Log("msg", "rpc server error", "err", err)
+				return err
+			case <-ctxAll.Done():
+				level.Info(logger).Log("msg", "receive_quit_signal_rpc_server_exit")
+				return nil
 			}
 
 		}, func(err error) {
-
+			cancelAll()
 		},
 		)
 	}
