@@ -1,8 +1,9 @@
 package main
 
 import (
-	"Distributed-System-Awareness-Platform/src/modules/agent/config"
-	"Distributed-System-Awareness-Platform/src/modules/agent/rpc"
+	"Distributed-System-Awareness-Platform/src/modules/client/config"
+	"Distributed-System-Awareness-Platform/src/modules/client/info"
+	"Distributed-System-Awareness-Platform/src/modules/client/rpc"
 	"context"
 	"fmt"
 	"github.com/go-kit/log"
@@ -21,14 +22,14 @@ import (
 
 var (
 	// 命令行解析
-	app = kingpin.New(filepath.Base(os.Args[0]), "The open-devops-agent")
+	app = kingpin.New(filepath.Base(os.Args[0]), "The open-devops-client")
 	// 指定配置文件
-	configFile = app.Flag("config.file", "open-devops-agent configuration file path").Short('c').Default("open-devops-agent.yml").String()
+	configFile = app.Flag("config.file", "open-devops-client configuration file path").Short('c').Default("open-devops-client.yml").String()
 )
 
 func main() {
 	// 版本信息
-	app.Version(version.Print("open-devops-agent"))
+	app.Version(version.Print("open-devops-client"))
 	// 帮助信息
 	app.HelpFlag.Short('h')
 
@@ -106,6 +107,21 @@ func main() {
 			func(err error) {
 				close(cancelC)
 			},
+		)
+	}
+	{
+		// 采集基础信息的
+		g.Add(func() error {
+			err := info.TickerInfoCollectAndReport(rpcCli, ctxAll, logger)
+			if err != nil {
+				level.Error(logger).Log("msg", "TickerInfoCollectAndReport.error", "err", err)
+				return err
+			}
+			return err
+
+		}, func(err error) {
+			cancelAll()
+		},
 		)
 	}
 
