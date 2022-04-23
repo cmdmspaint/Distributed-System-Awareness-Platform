@@ -51,3 +51,10 @@ func (r *RpcCli) GetCli() error {
 	r.Cli = gobrpc.NewRPCClient(r.ServerAddr, client, 5*time.Second)
 	return nil
 }
+
+func (r *RpcCli) CloseCli() {
+	if r.Cli != nil {
+		r.Cli.Close()
+		r.Cli = nil
+	}
+}

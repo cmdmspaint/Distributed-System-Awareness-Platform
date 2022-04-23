@@ -11,7 +11,7 @@ import (
 )
 
 func TickerInfoCollectAndReport(cli *rpc.RpcCli, ctx context.Context, logger log.Logger) error {
-	ticker := time.NewTicker(5 * time.Second)
+	ticker := time.NewTicker(1 * time.Second)
 
 	level.Info(logger).Log("msg", "TickerInfoCollectAndReport.start")
 	CollectBaseInfo(cli, logger)
@@ -36,8 +36,8 @@ func CollectBaseInfo(cli *rpc.RpcCli, logger log.Logger) {
 		mem  string
 		disk string
 	)
-	snShellCloud := `curl -s http://169.254.169.254/a/meta-data/instance-id`
-	snShellHost := `dmidecode -s system-serial-number |tail -n 1|tr -d "\n"`
+	snShellCloud := `echo 123456 | sudo curl -s http://169.254.169.254/a/meta-data/instance-id`
+	snShellHost := `echo 123456 | sudo dmidecode -s system-serial-number |tail -n 1|tr -d "\n"`
 
 	cpuShell := `cat /proc/cpuinfo |grep processor |wc -l| tr -d "\n"`
 	memShell := `cat /proc/meminfo |grep MemTotal |awk '{printf "%d",$2/1024/1024}'`

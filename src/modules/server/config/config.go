@@ -7,8 +7,14 @@ import (
 )
 
 type Config struct {
-	MysqlS  []*MySQLConf `yaml:"mysql_s"`
-	RpcAddr string       `yaml:"rpc_addr"`
+	MysqlS   []*MySQLConf         `yaml:"mysql_s"`
+	RpcAddr  string               `yaml:"rpc_addr"`
+	HttpAddr string               `yaml:"http_addr"`
+	PCC      *PublicCloudSyncConf `yaml:"public_cloud_sync"`
+}
+
+type PublicCloudSyncConf struct {
+	Enable bool `yaml:"enable"`
 }
 
 type MySQLConf struct {

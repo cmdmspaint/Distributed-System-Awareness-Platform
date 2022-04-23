@@ -5,3 +5,4 @@ mysql_s:
     idel: 16
     debug: false
 rpc_addr: :8080
+http_addr:  :8088

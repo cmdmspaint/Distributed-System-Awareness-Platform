@@ -2,8 +2,10 @@ package main
 
 import (
 	"Distributed-System-Awareness-Platform/src/models"
+	"Distributed-System-Awareness-Platform/src/modules/server/cloudsync"
 	"Distributed-System-Awareness-Platform/src/modules/server/config"
 	"Distributed-System-Awareness-Platform/src/modules/server/rpc"
+	"Distributed-System-Awareness-Platform/src/modules/server/web"
 	"context"
 	"fmt"
 	"github.com/go-kit/log"
@@ -86,7 +88,7 @@ func main() {
 	// TODO 本地测试node的添加，后续需要删掉
 	//models.StreePathAddTest(logger)
 	//models.StreePathQueryTest3(logger)
-
+	//models.AddResourceHostTest()
 	// 编排开始
 	var g run.Group
 	ctxAll, cancelAll := context.WithCancel(context.Background())
@@ -135,6 +137,45 @@ func main() {
 			cancelAll()
 		},
 		)
+	}
+	{
+		// rpc server
+		g.Add(func() error {
+			errChan := make(chan error, 1)
+			go func() {
+				errChan <- web.StartGin(sConfig.HttpAddr, logger)
+			}()
+			select {
+			case err := <-errChan:
+				level.Error(logger).Log("msg", "web server error", "err", err)
+				return err
+			case <-ctxAll.Done():
+				level.Info(logger).Log("msg", "receive_quit_signal_web_server_exit")
+				return nil
+			}
+
+		}, func(err error) {
+			cancelAll()
+		},
+		)
+	}
+	{
+		// 公有云同步
+		if sConfig.PCC.Enable {
+			cloudsync.Init(logger)
+			g.Add(func() error {
+				err := cloudsync.CloudSyncManager(ctxAll, logger)
+				if err != nil {
+					level.Error(logger).Log("msg", "cloudsync.CloudSyncManager.error", "err", err)
+
+				}
+				return err
+
+			}, func(err error) {
+				cancelAll()
+			},
+			)
+		}
 	}
 	g.Run()
 }
