@@ -7,10 +7,18 @@ import (
 )
 
 type Config struct {
-	MysqlS   []*MySQLConf         `yaml:"mysql_s"`
-	RpcAddr  string               `yaml:"rpc_addr"`
-	HttpAddr string               `yaml:"http_addr"`
-	PCC      *PublicCloudSyncConf `yaml:"public_cloud_sync"`
+	MysqlS       []*MySQLConf         `yaml:"mysql_s"`
+	RpcAddr      string               `yaml:"rpc_addr"`
+	HttpAddr     string               `yaml:"http_addr"`
+	PCC          *PublicCloudSyncConf `yaml:"public_cloud_sync"`
+	IndexModules []*IndexModuleConf   `yaml:"index_modules"`
+}
+
+type IndexModuleConf struct {
+	Enable       bool   `yaml:"enable"`
+	ResourceName string `yaml:"resource_name"`
+	Modulus      int    `yaml:"modulus"`
+	Num          int    `yaml:"num"`
 }
 
 type PublicCloudSyncConf struct {

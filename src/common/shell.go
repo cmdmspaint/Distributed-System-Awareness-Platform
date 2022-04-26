@@ -35,7 +35,7 @@ func ShellCommand(shellStr string) (string, error) {
 
 	defer cancel()
 
-	cmd := exec.CommandContext(ctxt, "sh", "-c", shellStr)
+	cmd := exec.CommandContext(ctxt, "/bin/sh", "-c", shellStr)
 	var buf bytes.Buffer
 	// 标准错误重定向到标准输出
 	cmd.Stdout = &buf

@@ -36,8 +36,8 @@ func CollectBaseInfo(cli *rpc.RpcCli, logger log.Logger) {
 		mem  string
 		disk string
 	)
-	snShellCloud := `echo 123456 | sudo curl -s http://169.254.169.254/a/meta-data/instance-id`
-	snShellHost := `echo 123456 | sudo dmidecode -s system-serial-number |tail -n 1|tr -d "\n"`
+	snShellCloud := `sudo curl -s http://169.254.169.254/a/meta-data/instance-id`
+	snShellHost := `sudo dmidecode -s system-serial-number |tail -n 1|tr -d "\n"`
 
 	cpuShell := `cat /proc/cpuinfo |grep processor |wc -l| tr -d "\n"`
 	memShell := `cat /proc/meminfo |grep MemTotal |awk '{printf "%d",$2/1024/1024}'`

@@ -4,6 +4,7 @@ import (
 	"Distributed-System-Awareness-Platform/src/models"
 	"Distributed-System-Awareness-Platform/src/modules/server/cloudsync"
 	"Distributed-System-Awareness-Platform/src/modules/server/config"
+	"Distributed-System-Awareness-Platform/src/modules/server/memoryindex"
 	"Distributed-System-Awareness-Platform/src/modules/server/rpc"
 	"Distributed-System-Awareness-Platform/src/modules/server/web"
 	"context"
@@ -82,13 +83,11 @@ func main() {
 		return
 	}
 	level.Info(logger).Log("msg", "load.config.success", "file.path", *configFile, "content.mysql.num", len(sConfig.MysqlS))
-
+	//初始化mysql
 	models.InitMySQL(sConfig.MysqlS)
 	level.Info(logger).Log("msg", "load.mysql.success", "db.num", len(models.DB))
-	// TODO 本地测试node的添加，后续需要删掉
-	//models.StreePathAddTest(logger)
-	//models.StreePathQueryTest3(logger)
-	//models.AddResourceHostTest()
+	//初始化倒排索引模块
+	memoryindex.Init(logger, sConfig.IndexModules)
 	// 编排开始
 	var g run.Group
 	ctxAll, cancelAll := context.WithCancel(context.Background())
@@ -176,6 +175,21 @@ func main() {
 			},
 			)
 		}
+	}
+	{
+		// 刷新倒排索引
+		g.Add(func() error {
+			err := memoryindex.RevertedIndexSyncManager(ctxAll, logger)
+			if err != nil {
+				level.Error(logger).Log("msg", "mem_index.RevertedIndexSyncManager.error", "err", err)
+
+			}
+			return err
+
+		}, func(err error) {
+			cancelAll()
+		},
+		)
 	}
 	g.Run()
 }

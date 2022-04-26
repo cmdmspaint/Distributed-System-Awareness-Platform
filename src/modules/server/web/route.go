@@ -15,6 +15,9 @@ func configRoutes(r *gin.Engine) {
 		api.POST("/node-path", NodePathAdd)
 		api.GET("/node-path", NodePathQuery)
 		api.POST("/resource-mount", ResourceMount)
+		api.POST("/resource-query", ResourceQuery)
+		api.GET("/resource-group", ResourceGroup)
+		api.POST("/resource-distribution", GetLabelDistribution)
 	}
 }
 

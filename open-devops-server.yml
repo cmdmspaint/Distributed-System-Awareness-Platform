@@ -4,5 +4,14 @@ mysql_s:
     max: 128
     idel: 16
     debug: false
+index_modules:
+  - resource_name: resource_host
+    enable: true
+    modulus: 0
+    num: 0
 rpc_addr: :8080
 http_addr:  :8088
+
+public_cloud_sync:
+  enable: false
+  #enable: true
