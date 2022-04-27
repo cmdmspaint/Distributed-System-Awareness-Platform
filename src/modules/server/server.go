@@ -5,7 +5,9 @@ import (
 	"Distributed-System-Awareness-Platform/src/modules/server/cloudsync"
 	"Distributed-System-Awareness-Platform/src/modules/server/config"
 	"Distributed-System-Awareness-Platform/src/modules/server/memoryindex"
+	"Distributed-System-Awareness-Platform/src/modules/server/metric"
 	"Distributed-System-Awareness-Platform/src/modules/server/rpc"
+	"Distributed-System-Awareness-Platform/src/modules/server/statistics"
 	"Distributed-System-Awareness-Platform/src/modules/server/web"
 	"context"
 	"fmt"
@@ -88,6 +90,8 @@ func main() {
 	level.Info(logger).Log("msg", "load.mysql.success", "db.num", len(models.DB))
 	//初始化倒排索引模块
 	memoryindex.Init(logger, sConfig.IndexModules)
+	// 注册stree相关的metrics
+	metric.NewMetrics()
 	// 编排开始
 	var g run.Group
 	ctxAll, cancelAll := context.WithCancel(context.Background())
@@ -182,6 +186,22 @@ func main() {
 			err := memoryindex.RevertedIndexSyncManager(ctxAll, logger)
 			if err != nil {
 				level.Error(logger).Log("msg", "mem_index.RevertedIndexSyncManager.error", "err", err)
+
+			}
+			return err
+
+		}, func(err error) {
+			cancelAll()
+		},
+		)
+	}
+	{
+		// 统计资源分布
+
+		g.Add(func() error {
+			err := statistics.TreeNodeStatisticsManager(ctxAll, logger)
+			if err != nil {
+				level.Error(logger).Log("msg", "statistics.TreeNodeStatisticsManager.error", "err", err)
 
 			}
 			return err

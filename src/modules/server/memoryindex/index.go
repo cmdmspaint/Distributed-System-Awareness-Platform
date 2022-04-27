@@ -3,11 +3,13 @@ package memoryindex
 import (
 	"Distributed-System-Awareness-Platform/src/common"
 	"Distributed-System-Awareness-Platform/src/modules/server/config"
+	"Distributed-System-Awareness-Platform/src/modules/server/metric"
 	"context"
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 	mem "github.com/ning1875/inverted-index"
 	"github.com/ning1875/inverted-index/index"
+	"github.com/prometheus/client_golang/prometheus"
 	"strings"
 	"sync"
 	"time"
@@ -39,7 +41,7 @@ func Init(logger log.Logger, ims []*config.IndexModuleConf) {
 
 			continue
 		}
-		level.Info(logger).Log("msg", "mem-index.init", "name", i.ResourceName)
+		level.Info(logger).Log("msg", "memoryindex.init", "name", i.ResourceName)
 		loadNum += 1
 		loadResource = append(loadResource, i.ResourceName)
 		switch i.ResourceName {
@@ -63,6 +65,11 @@ func Init(logger log.Logger, ims []*config.IndexModuleConf) {
 		}
 	}
 	level.Info(logger).Log("msg", "mem-index.init.summary", "loadNum", loadNum, "detail", strings.Join(loadResource, " "))
+}
+
+func GetAllResourceIndexReader() (make map[string]ResourceIndexer) {
+	return indexContainer
+
 }
 
 func GetMatchIdsByIndex(req common.ResourceQueryReq) (matchIds []uint64) {
@@ -107,11 +114,15 @@ func RevertedIndexSyncManager(ctx context.Context, logger log.Logger) error {
 func doIndexFlush() {
 	var wg sync.WaitGroup
 	wg.Add(len(indexContainer))
-	for _, ir := range indexContainer {
+	for name, ir := range indexContainer {
+		name := name
 		ir := ir
 		go func() {
 			defer wg.Done()
+			start := time.Now()
 			ir.FlushIndex()
+			metric.IndexFlushDuration.With(prometheus.Labels{common.LABEL_RESOURCE_TYPE: name}).Set(float64(time.Since(start).Seconds()))
+
 		}()
 	}
 	wg.Wait()

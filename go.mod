@@ -11,6 +11,7 @@ require (
 	github.com/prometheus/common v0.33.0
 	github.com/toolkits/pkg v1.2.9
 	github.com/ugorji/go/codec v1.2.7
+	github.com/zsais/go-gin-prometheus v0.1.0
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	gopkg.in/yaml.v2 v2.4.0
 	xorm.io/xorm v1.3.0
@@ -40,6 +41,7 @@ require (
 	github.com/prometheus/client_golang v1.12.1 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect
 	github.com/prometheus/procfs v0.7.3 // indirect
+	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/stretchr/testify v1.7.1 // indirect
 	github.com/syndtr/goleveldb v1.0.0 // indirect
 	golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e // indirect

@@ -3,12 +3,14 @@ package memoryindex
 import (
 	"Distributed-System-Awareness-Platform/src/common"
 	"Distributed-System-Awareness-Platform/src/models"
+	"Distributed-System-Awareness-Platform/src/modules/server/metric"
 	"encoding/json"
 	"fmt"
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 	mem "github.com/ning1875/inverted-index"
 	"github.com/ning1875/inverted-index/labels"
+	"github.com/prometheus/client_golang/prometheus"
 	"strconv"
 	"strings"
 )
@@ -21,9 +23,13 @@ type HostIndex struct {
 }
 
 func (hi *HostIndex) FlushIndex() {
+
 	// 数个数
+	//start := time.Now()
 	r := new(models.ResourceHost)
 	total := int(r.Count())
+	metric.ResourceNumCount.With(prometheus.Labels{common.LABEL_RESOURCE_TYPE: common.RESOURCE_HOST}).Set(float64(total))
+
 	ids := ""
 	for i := 0; i < total; i++ {
 
