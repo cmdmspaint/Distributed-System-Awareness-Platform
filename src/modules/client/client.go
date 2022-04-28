@@ -3,12 +3,14 @@ package main
 import (
 	"Distributed-System-Awareness-Platform/src/modules/client/config"
 	"Distributed-System-Awareness-Platform/src/modules/client/info"
+	"Distributed-System-Awareness-Platform/src/modules/client/metrics"
 	"Distributed-System-Awareness-Platform/src/modules/client/rpc"
 	"context"
 	"fmt"
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 	"github.com/oklog/run"
+	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/promlog"
 	promlogflag "github.com/prometheus/common/promlog/flag"
 	"github.com/prometheus/common/version"
@@ -80,8 +82,13 @@ func main() {
 
 	//初始化rpc client
 	rpcCli := rpc.InitRpcCli(sConfig.RpcServerAddr, logger)
-	rpcCli.Ping()
+	//rpcCli.Ping()
 
+	//创建metrics
+	metricsMap := metrics.CreateMetrics(sConfig.LogStrategies)
+	for _, m := range metricsMap {
+		prometheus.MustRegister(m)
+	}
 	// 编排开始
 	var g run.Group
 	ctxAll, cancelAll := context.WithCancel(context.Background())
