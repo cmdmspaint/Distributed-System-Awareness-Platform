@@ -142,7 +142,7 @@ func main() {
 		)
 	}
 	{
-		// rpc server
+
 		g.Add(func() error {
 			errChan := make(chan error, 1)
 			go func() {

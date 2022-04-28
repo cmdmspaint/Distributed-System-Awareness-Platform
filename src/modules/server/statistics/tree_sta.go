@@ -17,7 +17,7 @@ import (
 func TreeNodeStatisticsManager(ctx context.Context, logger log.Logger) error {
 
 	level.Info(logger).Log("msg", "TreeNodeStatisticsManager.start")
-	ticker := time.NewTicker(15 * time.Second)
+	ticker := time.NewTicker(1500 * time.Second)
 	defer ticker.Stop()
 	for {
 		select {
