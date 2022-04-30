@@ -8,7 +8,9 @@ import (
 	"Distributed-System-Awareness-Platform/src/modules/server/metric"
 	"Distributed-System-Awareness-Platform/src/modules/server/rpc"
 	"Distributed-System-Awareness-Platform/src/modules/server/statistics"
+	"Distributed-System-Awareness-Platform/src/modules/server/task"
 	"Distributed-System-Awareness-Platform/src/modules/server/web"
+	"Distributed-System-Awareness-Platform/src/modules/server/xprober"
 	"context"
 	"fmt"
 	"github.com/go-kit/log"
@@ -210,6 +212,46 @@ func main() {
 			cancelAll()
 		},
 		)
+	}
+
+	{
+		// 任务执行同步任务
+
+		g.Add(func() error {
+			err := task.SyncTaskManager(ctxAll, logger)
+			if err != nil {
+				level.Error(logger).Log("msg", "task.SyncTaskManager.error", "err", err)
+
+			}
+			return err
+
+		}, func(err error) {
+			cancelAll()
+		},
+		)
+	}
+
+	{
+		// 刷新探测目标池的任务
+		tfm := xprober.NewTargetFlushManager(logger, *configFile)
+		// target flush manager
+		g.Add(func() error {
+			err := tfm.Run(ctxAll)
+			return err
+		}, func(err error) {
+			cancelAll()
+		})
+	}
+
+	{
+
+		// data proceess.
+		g.Add(func() error {
+			err := xprober.DataProcess(ctxAll, logger)
+			return err
+		}, func(err error) {
+			cancelAll()
+		})
 	}
 	g.Run()
 }

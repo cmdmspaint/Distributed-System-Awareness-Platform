@@ -7,11 +7,17 @@ import (
 )
 
 type Config struct {
-	MysqlS       []*MySQLConf         `yaml:"mysql_s"`
-	RpcAddr      string               `yaml:"rpc_addr"`
-	HttpAddr     string               `yaml:"http_addr"`
-	PCC          *PublicCloudSyncConf `yaml:"public_cloud_sync"`
-	IndexModules []*IndexModuleConf   `yaml:"index_modules"`
+	MysqlS        []*MySQLConf         `yaml:"mysql_s"`
+	RpcAddr       string               `yaml:"rpc_addr"`
+	HttpAddr      string               `yaml:"http_addr"`
+	PCC           *PublicCloudSyncConf `yaml:"public_cloud_sync"`
+	IndexModules  []*IndexModuleConf   `yaml:"index_modules"`
+	ProberTargets []*Targets           `yaml:"prober_targets"`
+}
+type Targets struct {
+	ProberType string   `yaml:"prober_type"`
+	Region     string   `yaml:"region"`
+	Target     []string `yaml:"target"`
 }
 
 type IndexModuleConf struct {
@@ -24,7 +30,6 @@ type IndexModuleConf struct {
 type PublicCloudSyncConf struct {
 	Enable bool `yaml:"enable"`
 }
-
 type MySQLConf struct {
 	Name  string `yaml:"name"`
 	Addr  string `yaml:"addr"`
