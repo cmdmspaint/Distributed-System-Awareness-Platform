@@ -1,1 +1,3 @@
 .idea*
+/src/sql/*
+.yml*
