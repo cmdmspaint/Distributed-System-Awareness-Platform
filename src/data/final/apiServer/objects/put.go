@@ -1,8 +1,8 @@
 package objects
 
 import (
-	"../../../src/lib/es"
-	"../../../src/lib/utils"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/es"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/utils"
 	"log"
 	"net/http"
 	"strings"
@@ -14,14 +14,14 @@ import (
  * @param r
  */
 func put(w http.ResponseWriter, r *http.Request) {
-	hash := utils.GetHashFromHeader(r.Header)	//先获取hash值
-	if hash == "" {					//hash值空的记得返回问题
+	hash := utils.GetHashFromHeader(r.Header) //先获取hash值
+	if hash == "" {                           //hash值空的记得返回问题
 		log.Println("missing object hash in digest header")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	size := utils.GetSizeFromHeader(r.Header)	//从头部获取size信息
+	size := utils.GetSizeFromHeader(r.Header) //从头部获取size信息
 	c, e := storeObject(r.Body, hash, size)
 	if e != nil {
 		log.Println(e)
@@ -33,7 +33,7 @@ func put(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	name := strings.Split(r.URL.EscapedPath(), "/")[2]		//组成名字
+	name := strings.Split(r.URL.EscapedPath(), "/")[2] //组成名字
 	e = es.AddVersion(name, hash, size)
 	if e != nil {
 		log.Println(e)

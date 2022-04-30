@@ -1,12 +1,13 @@
 package rs
 
 import (
+	"Distributed-System-Awareness-Platform/src/data/src/lib/objectstream"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/utils"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
-	"lib/objectstream"
-	"lib/utils"
+
 	"log"
 	"net/http"
 )

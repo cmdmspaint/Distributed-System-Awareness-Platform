@@ -1,11 +1,11 @@
 package objects
 
 import (
-	"../../../src/lib/es"
-	"../../../src/lib/rs"
-	"../../../src/lib/utils"
-	"../heartbeat"
-	"../locate"
+	"Distributed-System-Awareness-Platform/src/data/final/apiServer/heartbeat"
+	"Distributed-System-Awareness-Platform/src/data/final/apiServer/locate"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/es"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/rs"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/utils"
 	"log"
 	"net/http"
 	"net/url"

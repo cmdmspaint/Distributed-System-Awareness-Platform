@@ -1,8 +1,8 @@
 package locate
 
 import (
-	"../../../src/lib/rabbitmq"
-	"../../../src/lib/types"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/rabbitmq"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/types"
 	"os"
 	"path/filepath"
 	"strconv"

@@ -1,9 +1,9 @@
 package locate
 
 import (
-	"../../../src/lib/rabbitmq"
-	"../../../src/lib/rs"
-	"../../../src/lib/types"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/rabbitmq"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/rs"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/types"
 	"encoding/json"
 	"os"
 	"time"
@@ -14,7 +14,7 @@ import (
 		新建一个消息队列，群发广播去找这个对象，如果一秒后没有响应就关闭，返回没找到
  * @param name
  * @return locateInfo	对象所在的地址
- */
+*/
 func Locate(name string) (locateInfo map[int]string) {
 	q := rabbitmq.New(os.Getenv("RABBITMQ_SERVER"))
 	q.Publish("dataServers", name)

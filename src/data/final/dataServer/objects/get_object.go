@@ -1,7 +1,7 @@
 package objects
 
 import (
-	"../locate"
+	"Distributed-System-Awareness-Platform/src/data/final/dataServer/locate"
 	"crypto/sha256"
 	"encoding/base64"
 	"log"

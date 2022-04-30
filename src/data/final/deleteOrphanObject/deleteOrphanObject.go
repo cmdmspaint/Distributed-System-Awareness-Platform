@@ -1,7 +1,7 @@
 package main
 
 import (
-	"../../src/lib/es"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/es"
 	"log"
 	"net/http"
 	"os"

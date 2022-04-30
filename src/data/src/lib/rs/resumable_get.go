@@ -1,8 +1,8 @@
 package rs
 
 import (
+	"Distributed-System-Awareness-Platform/src/data/src/lib/objectstream"
 	"io"
-	"lib/objectstream"
 )
 
 type RSResumableGetStream struct {

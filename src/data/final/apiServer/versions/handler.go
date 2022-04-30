@@ -1,7 +1,7 @@
 package versions
 
 import (
-	"../../../src/lib/es"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/es"
 	"encoding/json"
 	"log"
 	"net/http"

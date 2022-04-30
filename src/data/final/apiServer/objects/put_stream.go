@@ -1,8 +1,8 @@
 package objects
 
 import (
-	"../../../src/lib/rs"
-	"../heartbeat"
+	"Distributed-System-Awareness-Platform/src/data/final/apiServer/heartbeat"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/rs"
 	"fmt"
 )
 

@@ -1,8 +1,8 @@
 package objects
 
 import (
-	"../../../src/lib/utils"
-	"../locate"
+	"Distributed-System-Awareness-Platform/src/data/final/apiServer/locate"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/utils"
 	"fmt"
 	"io"
 	"net/http"

@@ -1,7 +1,7 @@
 package temp
 
 import (
-	"../../../src/lib/rs"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/rs"
 	"fmt"
 	"log"
 	"net/http"

@@ -1,10 +1,10 @@
 package temp
 
 import (
-	"../../../src/lib/es"
-	"../../../src/lib/rs"
-	"../../../src/lib/utils"
-	"../locate"
+	"Distributed-System-Awareness-Platform/src/data/final/apiServer/locate"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/es"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/rs"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/utils"
 	"io"
 	"log"
 	"net/http"

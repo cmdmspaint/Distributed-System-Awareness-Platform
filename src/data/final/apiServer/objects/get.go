@@ -1,8 +1,8 @@
 package objects
 
 import (
-	"../../../src/lib/es"
-	"../../../src/lib/utils"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/es"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/utils"
 	"compress/gzip"
 	"fmt"
 	"io"
@@ -24,20 +24,20 @@ func get(w http.ResponseWriter, r *http.Request) {
 	version := 0
 	var e error
 	if len(versionId) != 0 {
-		version, e = strconv.Atoi(versionId[0])		//拿到版本号
-		if e != nil {		//有问题就报错
+		version, e = strconv.Atoi(versionId[0]) //拿到版本号
+		if e != nil {                           //有问题就报错
 			log.Println(e)
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
 	}
-	meta, e := es.GetMetadata(name, version)	//	从ES中取出来
+	meta, e := es.GetMetadata(name, version) //	从ES中取出来
 	if e != nil {
 		log.Println(e)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	if meta.Hash == "" {			//空的就是没找到咯，del里面删除不就是置空吗
+	if meta.Hash == "" { //空的就是没找到咯，del里面删除不就是置空吗
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}

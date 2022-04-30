@@ -1,11 +1,11 @@
 package main
 
 import (
-	"./heartbeat"
-	"./locate"
-	"./objects"
-	"./temp"
-	"./versions"
+	"Distributed-System-Awareness-Platform/src/data/final/apiServer/heartbeat"
+	"Distributed-System-Awareness-Platform/src/data/final/apiServer/locate"
+	"Distributed-System-Awareness-Platform/src/data/final/apiServer/objects"
+	"Distributed-System-Awareness-Platform/src/data/final/apiServer/versions"
+	"Distributed-System-Awareness-Platform/src/data/final/dataServer/temp"
 	"log"
 	"net/http"
 	"os"

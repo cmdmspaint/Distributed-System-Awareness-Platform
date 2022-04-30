@@ -1,8 +1,8 @@
 package temp
 
 import (
-	"../../../src/lib/utils"
-	"../locate"
+	"Distributed-System-Awareness-Platform/src/data/final/dataServer/locate"
+	"Distributed-System-Awareness-Platform/src/data/src/lib/utils"
 	"compress/gzip"
 	"io"
 	"net/url"

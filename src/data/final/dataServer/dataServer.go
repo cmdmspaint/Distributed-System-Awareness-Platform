@@ -1,10 +1,10 @@
 package main
 
 import (
-	"./heartbeat"
-	"./locate"
-	"./objects"
-	"./temp"
+	"Distributed-System-Awareness-Platform/src/data/final/dataServer/heartbeat"
+	"Distributed-System-Awareness-Platform/src/data/final/dataServer/locate"
+	"Distributed-System-Awareness-Platform/src/data/final/dataServer/objects"
+	"Distributed-System-Awareness-Platform/src/data/final/dataServer/temp"
 	"log"
 	"net/http"
 	"os"
