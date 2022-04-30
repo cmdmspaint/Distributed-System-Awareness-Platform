@@ -32,12 +32,12 @@ var (
 	// 命令行解析
 	app = kingpin.New(filepath.Base(os.Args[0]), "The open-devops-server")
 	// 指定配置文件
-	configFile = app.Flag("config.file", "open-devops-server configuration file path").Short('c').Default("open-devops-server.yml").String()
+	configFile = app.Flag("config.file", "awareness_server configuration file path").Short('c').Default("awareness_server.yml").String()
 )
 
 func main() {
 
-	app.Version(version.Print("open-devops-server"))
+	app.Version(version.Print("awareness_server"))
 
 	app.HelpFlag.Short('h')
 

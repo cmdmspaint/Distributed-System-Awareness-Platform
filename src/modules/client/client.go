@@ -32,12 +32,12 @@ var (
 	// 命令行解析
 	app = kingpin.New(filepath.Base(os.Args[0]), "The open-devops-client")
 	// 指定配置文件
-	configFile = app.Flag("config.file", "open-devops-client configuration file path").Short('c').Default("open-devops-client.yml").String()
+	configFile = app.Flag("config.file", "open-devops-client configuration file path").Short('c').Default("awareness_client.yml").String()
 )
 
 func main() {
 	// 版本信息
-	app.Version(version.Print("open-devops-client"))
+	app.Version(version.Print("awareness_client"))
 	// 帮助信息
 	app.HelpFlag.Short('h')
 
