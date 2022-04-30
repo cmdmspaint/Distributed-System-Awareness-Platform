@@ -18,6 +18,12 @@ func configRoutes(r *gin.Engine) {
 		api.POST("/resource-query", ResourceQuery)
 		api.GET("/resource-group", ResourceGroup)
 		api.POST("/resource-distribution", GetLabelDistribution)
+		api.POST("/log-job", LogJobAdd)
+		api.GET("/log-job", LogJobGets)
+
+		api.POST("/task", TaskAdd)
+		api.GET("/task", TaskGets)
+		api.POST("/kill-task", TaskKill)
 	}
 }
 
