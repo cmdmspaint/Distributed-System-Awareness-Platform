@@ -7,9 +7,12 @@ import (
 	"sync"
 )
 
+/**
+增量更新管理器
+*/
 type LogJobManager struct {
 	targetMtx     sync.Mutex
-	activeTargets map[string]*LogJob
+	activeTargets map[string]*LogJob //当前活跃任务
 	cq            chan *consumer.AnalysPoint
 }
 
@@ -49,16 +52,18 @@ func (jm *LogJobManager) Sync(jobs []*LogJob) {
 
 	jm.targetMtx.Lock()
 	for _, t := range jobs {
+		//根据hash值判断
 		hash := t.hash()
 
 		thisAllTargets[hash] = t
+		//如果hash值存在 说明是在缓存中是本地的 如果不在说明在远端
 		if _, loaded := jm.activeTargets[hash]; !loaded {
-			thisNewTargets[hash] = t
+			thisNewTargets[hash] = t //新增
 			jm.activeTargets[hash] = t
 		}
 	}
 
-	// 停止旧的
+	// 停止旧的  如果不在说明 已经被删掉了
 	for hash, t := range jm.activeTargets {
 		if _, loaded := thisAllTargets[hash]; !loaded {
 			logger.Infof("stop %+v stra:%+v", t, t.Stra)

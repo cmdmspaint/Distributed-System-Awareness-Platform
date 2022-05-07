@@ -14,6 +14,7 @@
 package xprober
 
 import (
+	"Distributed-System-Awareness-Platform/src/common"
 	"context"
 	"io"
 	"net"
@@ -21,7 +22,6 @@ import (
 	"net/http/cookiejar"
 	"net/http/httptrace"
 	"net/url"
-	"open-devops/src/common"
 	"strings"
 	"sync"
 	"time"

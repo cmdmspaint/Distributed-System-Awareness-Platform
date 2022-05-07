@@ -22,6 +22,9 @@ func NewReader(filePath string, stream chan string) (*Reader, error) {
 		Stream:   stream,
 		Close:    make(chan struct{}),
 	}
+	/**
+	SeekEnd从尾部读取
+	*/
 	err := r.openFile(io.SeekEnd, filePath)
 	return r, err
 }
@@ -60,7 +63,7 @@ func (r *Reader) StartRead() {
 
 	analysClose := make(chan struct{})
 	go func() {
-
+		// 没10秒 计算一次读了多少行 删了多少行
 		for {
 
 			select {
@@ -80,11 +83,11 @@ func (r *Reader) StartRead() {
 	}()
 
 	for line := range r.tailer.Lines {
-		readCnt++
+		readCnt++ // 统计读取了多少行
 		select {
 		case r.Stream <- line.Text:
 		default:
-			dropCnt++
+			dropCnt++ //统计丢掉了多少行
 		}
 	}
 	close(analysClose)

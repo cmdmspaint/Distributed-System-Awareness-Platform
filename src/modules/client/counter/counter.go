@@ -1,5 +1,6 @@
 package counter
 
+//负责数据处理
 import (
 	"Distributed-System-Awareness-Platform/src/common"
 	"Distributed-System-Awareness-Platform/src/modules/client/consumer"

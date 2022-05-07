@@ -1,9 +1,10 @@
 package web
 
 import (
+	"Distributed-System-Awareness-Platform/src/common"
+	"Distributed-System-Awareness-Platform/src/models"
 	"github.com/gin-gonic/gin"
-	"open-devops/src/common"
-	"open-devops/src/models"
+
 	"strconv"
 )
 
