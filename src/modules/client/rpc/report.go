@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+//周期性执行ticker
 func TickerTaskReport(cli *RpcCli, ctx context.Context) error {
 	ticker := time.NewTicker(5 * time.Second)
 

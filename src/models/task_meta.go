@@ -18,7 +18,7 @@ type TaskMeta struct {
 	Hosts    []string  `xorm:"-" json:"-"`
 	Done     int       `xorm:"done" json:"done"` //任务结束与否的标志位=0未结束，=1结束
 	Clock    int64     `xorm:"-" json:"clock"`
-	Action   string    `xorm:"-" json:"action"`
+	Action   string    `json:"action"`
 }
 
 // 查询一条
@@ -79,6 +79,7 @@ func TaskMetaGets(where string, args ...interface{}) ([]*TaskMeta, error) {
 
 	return obj, nil
 }
+
 // 将任务的action设置为kill
 func SetTaskKill(id int64) error {
 	session := DB["stree"].NewSession()

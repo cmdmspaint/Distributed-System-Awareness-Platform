@@ -95,7 +95,7 @@ func (t *Task) doneBefore() bool {
 	return file.IsExist(doneFlag)
 }
 
-// 加载任务的记过
+// 加载任务的结果
 func (t *Task) loadResult() {
 	metadir := t.MetaDir
 
