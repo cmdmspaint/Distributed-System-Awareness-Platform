@@ -7,8 +7,8 @@ type ProberResultOne struct {
 	TargetAddr   string  `json:"targetAddr"`
 	SourceRegion string  `json:"sourceRegion"`
 	TargetRegion string  `json:"targetRegion"`
-	ProbeType    string  `json:"probeType"`
-	TimeStamp    int64   `json:"timeStamp"`
+	ProbeType    string  `json:"probeType"` //探测类型
+	TimeStamp    int64   `json:"timeStamp"` //探测时间
 	Value        float32 `json:"value"`
 }
 

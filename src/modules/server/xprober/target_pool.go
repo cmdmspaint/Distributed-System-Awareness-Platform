@@ -42,6 +42,7 @@ func rangeIcmpMap() {
 	IcmpRegionProberMap.Range(f)
 }
 
+// agent上报的ip地址，统一刷入一个map中
 func (t *TargetFlushManager) flushAgentIpIntoGlobalMap() {
 	level.Info(t.Logger).Log("msg", "flushAgentIpIntoGlobalMap run....")
 	tmpM := make(map[string][]string)
@@ -111,6 +112,7 @@ func (t *TargetFlushManager) Run(ctx context.Context) error {
 
 }
 
+//从yaml配置文件中读取探测的目标
 func (t *TargetFlushManager) refreshFromConfigFile() {
 	level.Info(t.Logger).Log("msg", "refreshFromConfigFile run....")
 
@@ -171,6 +173,7 @@ func (t *TargetFlushManager) refresh() {
 	go t.flushAgentIpIntoGlobalMap()
 }
 
+//agent rpc过来后获取它要探测目标的方法，对应就是从map中给它取值
 func GetTargetsByRegion(sourceRegion string) (res []*common.ProberTargets) {
 
 	f := func(k, v interface{}) bool {
@@ -182,6 +185,7 @@ func GetTargetsByRegion(sourceRegion string) (res []*common.ProberTargets) {
 		//}
 		return true
 	}
+	//给这个client 非它自己的region的目标
 	fi := func(k, v interface{}) bool {
 		key := k.(string)
 		va := v.(*common.ProberTargets)

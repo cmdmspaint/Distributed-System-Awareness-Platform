@@ -14,9 +14,9 @@ import (
 )
 
 var (
-	PbResMap           = sync.Map{}
-	Probers            map[string]ProbeFn
-	LTM                *LocalTargetManger
+	PbResMap           = sync.Map{}       // 探测结果map
+	Probers            map[string]ProbeFn // 探针支持的探测方法
+	LTM                *LocalTargetManger // 本地的探测目标管理器
 	ProberFuncInterval = 15 * time.Second
 )
 
